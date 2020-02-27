@@ -1,6 +1,6 @@
-# Custom Utilities For the Project
+# Custom Utilities Developed by UserAdhikari674
 
-def ExtractDICOM(folder_path="C:/Users/user/user/101Projects/Cancer Detection/DataMini"):
+def ExtractDICOM(folder_path="C:/Users/user/User/101Projects/Cancer Detection/DataMini"):
     try :
         import pydicom as dicom
         import PIL
@@ -13,7 +13,7 @@ def ExtractDICOM(folder_path="C:/Users/user/user/101Projects/Cancer Detection/Da
     except Exception as exp:
         print("---- !! IMPORT ERROR [custom_utilities.ExtractDICOM()] !! ----\n",exp,"\n---------- ---------------------------------------- ----------\n")
 
-    extraction_path = "C:/Users/user/user/101Projects/Cancer Detection/DataMiniExtracted"
+    extraction_path = "C:/Users/user/User/101Projects/Cancer Detection/DataMiniExtracted"
     print("Main Folder Path is : ",folder_path,"\n")
     def Extractor(folder_path,dir_space=0):
         PNG = False; #nonlocal writer; nonlocal fieldnames;
@@ -226,3 +226,32 @@ def smoothslices(inputarray, HM_SLICES):
     #print(slices[:HM_SLICES].shape)
     return slices[:HM_SLICES]
 
+def plot_confusion_matrix(cm, classes,normalize=False,title='Confusion matrix',cmap='plt.cm.Blues'):
+    import matplotlib.pyplot as plt
+    cmap = plt.cm.Blues
+    if normalize:
+        cm = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
+        print("Normalized confusion matrix")
+    else:
+        print('Confusion matrix, without normalization')
+
+    print(cm)
+
+#     plt.figure(figsize= (10,10))
+    plt.imshow(cm, interpolation='nearest', cmap=cmap)
+    plt.title(title, fontsize=15)
+#     plt.colorbar()
+    tick_marks = np.arange(len(classes))
+    plt.xticks(tick_marks, classes, rotation=45, fontsize=15)
+    plt.yticks(tick_marks, classes, fontsize=15)
+
+    fmt = '.2f' if normalize else 'd'
+    thresh = cm.max() / 2.
+    for i, j in itertools.product(range(cm.shape[0]), range(cm.shape[1])):
+        plt.text(j, i, format(cm[i, j], fmt),
+                 horizontalalignment="center",
+                 color="black" if cm[i, j] > thresh else "black", fontsize=15)
+
+    plt.ylabel('True label', fontsize=15)
+    plt.xlabel('Predicted label', fontsize=15)
+    plt.tight_layout()
